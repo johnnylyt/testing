@@ -1,0 +1,23 @@
+---
+- hosts: server1 
+  tasks:
+  - name: Making sure the /tmp has more than 1gb
+    shell: "df -h /tmp|grep -v Filesystem|awk '{print $4}'|cut -d G -f1"
+    register: tmpspace
+    failed_when: "tmpspace.stdout|float < 0.5"
+
+  - name: Making sure the /opt has more than 4gb
+    shell: "df -h /opt|grep -v Filesystem|awk '{print $4}'|cut -d G -f1"
+    register: tmpspace
+    failed_when: "tmpspace.stdout|float < 0.5"
+
+  - name: Making sure the Physical Memory more than 2gb
+    shell: "cat /proc/meminfo|grep -i memtotal|awk '{print $2/1024/1024}'"
+    register: memory
+    failed_when: "memory.stdout|float < 5"
+
+  - name: "shut down CentOS 6 and Debian 7 systems"
+    command: echo "run shutdown....."
+    when: (ansible_distribution == "CentOS" and ansible_distribution_major_version == "8") or
+          (ansible_distribution == "Debian" and ansible_distribution_major_version == "7")
+

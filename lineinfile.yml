@@ -1,0 +1,8 @@
+---
+- hosts: server1 
+  tasks:
+    - name: Ensure SELinux is set to enforcing mode
+      ansible.builtin.lineinfile:
+        path: /root/config.sample 
+        regexp: '^SELINUX='
+        line: SELINUX=enforcing

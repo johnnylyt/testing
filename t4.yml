@@ -1,0 +1,14 @@
+---
+- hosts: server1 
+#  gather_facts: no
+  tasks:
+    - name: Run rpm 
+      shell:
+         "rpm -qa"
+      register: out
+
+    - debug: 
+        msg: "We find a match" 
+      when: out.stdout is regex("fusioninventory-agent")
+ #    with_list: "{{ out.stdout_lines  }}"
+

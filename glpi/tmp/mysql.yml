@@ -1,0 +1,22 @@
+---
+- hosts: lampstack
+  become: yes
+  become_method: sudo
+  vars_files:
+    - vars/default.yml
+  tasks:
+  - name: Removes all anonymous user accounts
+    mysql_user:
+      name: ''
+      host_all: yes
+      state: absent
+      login_user: root
+      login_password: "{{ mysql_root_password }}"
+
+  - name: Removes the MySQL test database
+    mysql_db:
+      name: test
+      state: absent
+      login_user: root
+      login_password: "{{ mysql_root_password }}"
+

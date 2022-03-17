@@ -1,0 +1,11 @@
+---
+- hosts: server1 
+  tasks:
+
+  - name: Show Inventory Host name
+    debug: 
+      msg: "{{ inventory_hostname }}"
+
+  - name: Show Group 
+    debug: 
+      msg: "{{ group_names }}"

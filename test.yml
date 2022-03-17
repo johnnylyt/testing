@@ -1,0 +1,10 @@
+---
+- hosts: server1 
+  tasks:
+    - name: Check Date with Shell command
+      shell:
+         "rpm -qa"
+      register: datecmd
+      tags: datecmd
+
+    - debug: msg="{{datecmd.stdout | regex_search('ssh') }}"

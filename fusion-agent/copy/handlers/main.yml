@@ -1,0 +1,6 @@
+---
+- name: restart fusioninventory-agent service
+  service:
+    name: fusioninventory-agent 
+    state: restarted
+
