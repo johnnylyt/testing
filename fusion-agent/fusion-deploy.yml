@@ -1,7 +1,0 @@
----
-- hosts: server3 
-  remote_user: root
-
-  roles:
-    - install
-    - copy

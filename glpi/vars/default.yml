@@ -1,7 +1,0 @@
----
-mysql_root_password: "P@ssw0rd"
-app_user: "www-data"
-http_host: "msglpi.horizon.com"
-http_conf: "msglpi.horizon.com.conf"
-http_port: "80"
-disable_default: true
