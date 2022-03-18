@@ -1,7 +1,0 @@
----
-- hosts: all
-  tasks:
-  - name: "shut down CentOS 6 and Debian 7 systems"
-    command: echo "run shutdown....." 
-    when: (ansible_distribution == "CentOS" and ansible_distribution_major_version == "9") or
-          (ansible_distribution == "Debian" and ansible_distribution_major_version == "7")

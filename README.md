@@ -1,1 +1,0 @@
-# Ansible testing git repository

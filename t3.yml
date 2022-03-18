@@ -1,9 +1,0 @@
----
-- hosts: server1 
-  tasks:
-    - name: Check Date with Shell command
-      shell:
-         "rpm -qa"
-      register: out
-
-    - debug: msg={{ out.stdout_lines | regex_search('^fusioninventory-agent', multiline=True, ignorecase=True) }}

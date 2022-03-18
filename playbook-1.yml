@@ -1,7 +1,0 @@
----
-- hosts: server1 
-  tasks:
-  - name: "Test Debian systems"
-    command: echo "Debian" 
-    when: ansible_os_family == "Debian"
-
