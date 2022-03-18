@@ -1,0 +1,11 @@
+---
+- hosts: server3 
+  remote_user: root
+
+  tasks:
+    - name: Enable EPEL Repository on CentOS 8 
+      command: rpm -qa 
+      register: out 
+
+    - debug: 
+        msg: out.stdout  

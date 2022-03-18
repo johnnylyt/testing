@@ -1,0 +1,15 @@
+---
+- name: Copy files to GLPI with owner and permissions
+  hosts: lampstack
+  become: true 
+  tasks:
+    - name: Reload Apache
+      service:
+        name: apache2
+        state: reloaded
+
+    - name: Restart Apache
+      service:
+        name: apache2
+        state: restarted
+

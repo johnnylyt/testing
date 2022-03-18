@@ -1,0 +1,6 @@
+---
+- name: Hello tag example
+  debug:
+    msg: "Hello!"
+  tags:
+    - hello

@@ -1,0 +1,16 @@
+---
+- hosts: server1
+  tasks:
+    - name: Remove crontab entry 
+      ansible.builtin.lineinfile:
+        path: /tmp/config.txt 
+        line: "0 2 * * * /usr/bin/fusioninventory-agent -f >/var/lib/fusioninventory-agent/cron.log 2>&1"
+        state: absent 
+        backup: yes 
+
+    - name: Add crontab entry
+      ansible.builtin.lineinfile:
+        path: /tmp/config.txt 
+        line: "0 4 * * * /usr/bin/fusioninventory-agent -f >/var/lib/fusioninventory-agent/cron.log 2>&1"
+        state: present
+        backup: yes 

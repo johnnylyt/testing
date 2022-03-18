@@ -1,0 +1,73 @@
+---
+- name: Copy files to GLPI with owner and permissions
+  hosts: lampstack
+  become: yes 
+  become_method: sudo
+
+  vars_files:
+    - vars/default.yml
+
+  tasks:
+    - name: Create a new database for GLPI 
+      community.mysql.mysql_db:
+        name: glpidb
+        state: present
+        login_user: root
+        login_password: "{{ mysql_root_password }}"
+
+    - name: Create user with password, all database privileges and 'WITH GRANT OPTION' in glpidb 
+      community.mysql.mysql_user:
+        state: present
+        name: glpiuser 
+        password: horizon1234
+        priv:
+          'glpidb.*': 'ALL,GRANT'
+        login_user: root
+        login_password: "{{ mysql_root_password }}"
+
+    - name: copy GLPI package 
+      become: true 
+      copy:
+        src: pkgs/glpi-9.5.5.tgz 
+        dest: /tmp 
+        owner: root 
+        group: root 
+
+    - name: Unarchive GLPI package 
+      ansible.builtin.unarchive:
+        src: /tmp/glpi-9.5.5.tgz
+        dest: /var/www/msglpi.horizon.com
+        owner: www-data
+        group: www-data
+        remote_src: yes
+
+    - name: copy FusionInventory Plugin package
+      become: true
+      copy:
+        src: pkgs/fusioninventory-9.5+3.0.tar.bz2
+        dest: /tmp
+        owner: root
+        group: root
+
+    - name: Unarchive FusionInventory Plugin package 
+      ansible.builtin.unarchive:
+        src: /tmp/fusioninventory-9.5+3.0.tar.bz2
+        dest: /var/www/msglpi.horizon.com/glpi/plugins
+        owner: www-data
+        group: www-data
+        remote_src: yes
+
+    - name: Reload Apache
+      service:
+        name: apache2
+        state: reloaded
+
+    - name: Restart Apache
+      service:
+        name: apache2
+        state: restarted
+
+    - name: Visit URL to finish GLPI installation 
+      ansible.builtin.debug:
+        msg:
+        - "Visit http://{{ ansible_default_ipv4.address }}/glpi/install/install.php to continue GLPI Setup"

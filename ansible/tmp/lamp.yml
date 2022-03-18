@@ -1,0 +1,9 @@
+---
+- hosts: server2
+  remote_user: root
+
+
+  roles:
+    - install
+    - copy 
+

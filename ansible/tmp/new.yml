@@ -1,0 +1,30 @@
+---
+- hosts: server1 
+  remote_user: root
+
+  vars:
+    my_name: mirkar
+    first_nme:
+
+  tasks:
+    - debug:
+      #Here we are just printing out the variable value for verification
+       msg: "This is my name as usual is: '{{ my_name }}'"
+    - debug:
+      #Here are converting string into uppercase
+       msg: "This is my name in upper case: '{{ my_name|upper }}'"
+    - debug:
+      #Here are are converting string into Lower case
+       msg: "This is my name in Lowewe case: '{{ my_name|lower }}'"
+    - debug:
+      #Here are converting string into Title case
+       msg: "This is my name in Title case: '{{ my_name|title}}'"
+    - debug:
+      #Here are replacing string with other string
+       msg: "This is replacing example: '{{ my_name|replace('mirkar','Mirkar1')}}'"
+    - debug:
+      #Here are placing default value for variable first_nme to Manmohan if its NULL.
+       msg: "The Name is:  '{{ first_name|default('Manmohan') }} {{ my_name }}' "
+    - debug:
+      #Here are placing default value for variable first_nme to Manmohan if its NULL.
+       msg: "The Name is:  '{{ first_name|default('Manmohan') }} {{ my_name }}' "

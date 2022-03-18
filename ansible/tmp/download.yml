@@ -1,0 +1,15 @@
+---
+- hosts: localhost 
+  gather_facts: False
+  tasks:
+
+  - name: Download filebeat 
+    get_url:
+      url: https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-oss-7.15.1-x86_64.rpm 
+      dest: /tmp
+
+  - name: Install filebeat 
+    yum:
+      name: /tmp/filebeat-oss-7.15.1-x86_64.rpm
+      state: present 
+      disable_gpg_check: yes

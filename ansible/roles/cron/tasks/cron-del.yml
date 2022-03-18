@@ -1,0 +1,6 @@
+- name: Delete cronjob
+  ansible.builtin.lineinfile:
+    path: "{{ crontab }}"
+    line: "{{ cronjob }}"
+    state: absent 
+    backup: yes 

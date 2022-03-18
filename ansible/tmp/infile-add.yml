@@ -1,0 +1,21 @@
+---
+- hosts: server1
+  vars:
+    crontab: /tmp/config.txt 
+  tasks:
+
+    - name: Ensure file exists
+      copy:
+        content: ""
+        dest: "{{ crontab }}"
+        force: no
+        group: root 
+        owner: root
+        mode: 0600
+
+    - name: Set crontab for daily task 
+      ansible.builtin.lineinfile:
+        path: "{{ crontab }}"
+        line: "0 2 * * * /usr/bin/fusioninventory-agent -f >/var/lib/fusioninventory-agent/cron.log 2>&1"
+        state: present
+        backup: yes 

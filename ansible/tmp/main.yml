@@ -1,0 +1,15 @@
+---
+- hosts: localhost 
+  gather_facts: False
+  tasks:
+    - import_tasks: hello.yml
+      tags:
+        - hello 
+
+    - import_tasks: goodbye.yml
+      tags:
+        - goodbye 
+
+    - import_tasks: howareyou.yml 
+      tags:
+        - howareyou 

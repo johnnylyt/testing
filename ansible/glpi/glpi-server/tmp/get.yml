@@ -1,0 +1,14 @@
+---
+- hosts: lampstack 
+  become: yes
+  become_method: sudo
+  vars:
+    - glpi_ver: 9.5.5
+    - fusionplug_ver: 9.5+3.0
+
+  tasks:
+  - name: Download foo.conf
+    get_url:
+      url: https://github.com/glpi-project/glpi/releases/download/$VER/glpi-{{glpi_ver}}.tgz 
+      dest: /tmp
+      mode: '0440'

@@ -1,0 +1,21 @@
+---
+- hosts: localhost
+  gather_facts: true 
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+  tasks:
+
+    - name: Hello tag example
+      debug:
+        msg: "Hello!"
+      tags:
+        - hello
+
+    - name: Container present
+      docker_container:
+        name: mycontainer
+        state: present
+        image: ubuntu:14.04
+        command: sleep infinity
+

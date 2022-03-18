@@ -1,0 +1,5 @@
+---
+- name: No tag example
+  debug:
+    msg: "How are you?"
+

@@ -1,0 +1,22 @@
+- name: Ensure file exists
+  copy:
+    content: ""
+    dest: "{{ crontab }}"
+    force: no
+    group: root 
+    owner: root
+    mode: 0600
+
+- name: Delete cronjob
+  ansible.builtin.lineinfile:
+    path: "{{ crontab }}"
+    line: "{{ oldcron }}"
+    state: absent 
+    backup: yes 
+
+- name: Add cronjob
+  ansible.builtin.lineinfile:
+    path: "{{ crontab }}"
+    line: "{{ cronjob }}" 
+    state: present
+    backup: yes 

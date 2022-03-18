@@ -1,0 +1,9 @@
+- import_tasks: howareyou.yml 
+  tags:
+    - howareyou 
+
+- name: it is main3.yml
+  ansible.builtin.debug:
+    msg:
+    - "It is main3.yml"
+

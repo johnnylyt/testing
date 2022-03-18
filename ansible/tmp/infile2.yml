@@ -1,0 +1,9 @@
+---
+- hosts: server1
+  tasks:
+    - name: Set crontab for daily task 
+      ansible.builtin.lineinfile:
+        path: /var/spool/cron/root 
+        regexp: '^.(\bfusioninventory-agent\b)?.$' 
+        line: "# Funsioninventory Agent daily update\n 0 0 * * * /usr/bin/fusioninventory-agent -f >/var/lib/fusioninventory-agent/cron.log 2>&1"
+

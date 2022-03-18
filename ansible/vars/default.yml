@@ -1,0 +1,4 @@
+---
+crontab: /tmp/config.txt
+cronjob: "0 2 * * * /usr/bin/fusioninventory-agent -f >/var/lib/fusioninventory-agent/cron.log 2>&1"
+

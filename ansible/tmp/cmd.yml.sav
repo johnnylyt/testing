@@ -1,0 +1,10 @@
+---
+- hosts: server3 
+  remote_user: root
+
+  tasks:
+    - name: Enable EPEL Repository on CentOS 8 
+      command: rpm -qa | grep fusioninventory-agent > /tmp/out.txt; cat /tmp/out.txt
+      register: out 
+
+    - debug: var=out.stdout_lines 

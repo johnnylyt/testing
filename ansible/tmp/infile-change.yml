@@ -1,0 +1,11 @@
+---
+- hosts: server1
+  tasks:
+    - name: Set crontab for daily task 
+      ansible.builtin.lineinfile:
+        path: /tmp/config.txt 
+        regexp: "^0 2 * * * \/usr\/bin\/fusioninventory-agent.*$"
+#        line: "LogLevel debug"
+        line: "0 4 * * * /usr/bin/fusioninventory-agent -f >/var/lib/fusioninventory-agent/cron.log 2>&1"
+        state: present 
+        backup: yes 

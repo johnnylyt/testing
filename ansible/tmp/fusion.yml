@@ -1,0 +1,53 @@
+---
+- hosts: server3 
+  remote_user: root
+
+  tasks:
+    - name: Enable EPEL Repository on CentOS 8
+      command: /usr/bin/dnf config-manager --set-enabled powertools
+      register: out
+
+    - debug: var=out.stdout_lines
+
+    - name: Installing epel-release 
+      yum: 
+        name: 
+          - epel-release
+        state: latest
+
+    - name: Installing fusioninventory  
+      yum: 
+        name: 
+          - fusioninventory-agent
+          - fusioninventory-agent-task-inventory
+        state: latest
+
+    
+    - name: Enabling service 
+      service: 
+        name: fusioninventory-agent
+        enabled: yes
+        state: started
+
+    - name: Copying your agent.cfg to /etc/fusioninventory 
+      copy:
+        src: /etc/fusioninventory/agent.cfg
+        dest: /etc/fusioninventory 
+        force: yes
+
+      notify:
+          - restart fusioninventory-agent service
+
+    - name: Copying Hourly cron
+      copy:
+        src: /etc/cron.hourly/fusioninventory-agent.sh
+        dest: /etc/cron.hourly 
+        mode: u+rwx,g+rx,o+rx
+        force: yes
+
+  handlers:
+    - name: restart fusioninventory-agent service
+      service:
+        name: fusioninventory-agent 
+        state: restarted
+

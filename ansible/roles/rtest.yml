@@ -1,0 +1,9 @@
+---
+- hosts: server1
+  remote_user: root
+
+  tasks:
+  - name: Run tasks/main3.yaml instead of 'main'
+    import_role:
+      name: crontab 
+      tasks_from: main3

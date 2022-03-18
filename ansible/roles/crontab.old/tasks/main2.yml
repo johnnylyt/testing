@@ -1,0 +1,9 @@
+- import_tasks: goodbye.yml
+  tags:
+    - goodbye 
+
+- name: it is main2.yml
+  ansible.builtin.debug:
+    msg:
+    - "It is main2.yml"
+

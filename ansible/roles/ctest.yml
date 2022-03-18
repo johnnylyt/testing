@@ -1,0 +1,30 @@
+---
+- hosts: server1
+  remote_user: root
+  vars:
+    crontab: /tmp/config.txt
+    cronjob: "0 2 * * * /usr/bin/fusioninventory-agent -f >/var/lib/fusioninventory-agent/cron.log 2>&1"
+    oldcron: "0 4 * * * /usr/bin/fusioninventory-agent -f >/var/lib/fusioninventory-agent/cron.log 2>&1"
+
+  tasks:
+  - name: Run tasks/cron-add.yaml to add cronjob
+    import_role:
+      name: cron
+      tasks_from: cron-add 
+    tags:
+      - add 
+
+  - name: Run tasks/cron-del.yaml to delete cronjob
+    import_role:
+      name: cron
+      tasks_from: cron-del
+    tags:
+      - delete 
+
+  - name: Run tasks/cron-del.yaml to delete cronjob
+    import_role:
+      name: cron
+      tasks_from: cron-replace
+    tags:
+      - replace 
+    

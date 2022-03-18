@@ -1,0 +1,19 @@
+---
+- hosts: server3 
+  remote_user: root
+
+
+  tasks:
+    - name: Installing fusioninventory  
+      yum: 
+        name: 
+          - fusioninventory-agent
+          - fusioninventory-agent-task-inventory
+        state: latest
+
+    - name: Enabling service 
+      service: 
+        name: fusioninventory-agent
+        enabled: yes
+        state: started
+

@@ -1,0 +1,16 @@
+- import_tasks: hello.yml
+  tags:
+    - hello 
+
+- import_tasks: goodbye.yml
+  tags:
+    - goodbye 
+
+- import_tasks: howareyou.yml 
+  tags:
+    - howareyou 
+
+- name: it is main.yml
+  ansible.builtin.debug:
+    msg:
+    - "It is main.yml"
