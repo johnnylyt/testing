@@ -1,11 +1,17 @@
 ---
 - hosts: server1
-  tasks:
-    - name: Set crontab for daily task 
-      ansible.builtin.lineinfile:
-        path: /tmp/config.txt 
-        regexp: "^0 2 * * * \/usr\/bin\/fusioninventory-agent.*$"
-#        line: "LogLevel debug"
-        line: "0 4 * * * /usr/bin/fusioninventory-agent -f >/var/lib/fusioninventory-agent/cron.log 2>&1"
-        state: present 
-        backup: yes 
+  vars:
+    glpihost: 1.1.1.1
+
+    tasks:
+      - name: "Example1: Validate if a String or line is present in the file"
+        become: yes
+        become_user: root
+        lineinfile:
+          path: /tmp/agent.cfg 
+          # The String to Search
+          regexp: "glpihost" 
+          # The String to Replace
+          line: server = http://{{glpihost}}/plugins/fusioninventory/ 
+          state: present
+          backup: yes
