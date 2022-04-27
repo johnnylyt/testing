@@ -1,0 +1,29 @@
+---
+- hosts: all 
+  become: yes
+
+  tasks:
+    - name: "Set default"
+      set_fact:
+        glpiserver: 0.0.0.0 
+
+    - debug:
+        msg: "The glpiserver is '{{ glpiserver }}'"
+
+    - name: "Set for server1"
+      set_fact:
+        glpiserver: 1.1.1.1 
+      when: inventory_hostname in ['server1','server1a','server1b']
+
+    - name: "Set for server3"
+      set_fact:
+        glpiserver: 3.3.3.3
+      when: inventory_hostname in ['server3','server3a','server3b']
+
+    - debug:
+        msg: "The glpiserver is '{{ glpiserver }}'"
+
+    - name: Apply Page Template
+      template:
+        src: files/agent.cfg.j2  
+        dest: /tmp/agent.cfg 

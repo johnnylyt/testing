@@ -1,0 +1,9 @@
+---
+- name: Copying your agent.cfg to /etc/fusioninventory 
+  copy:
+    src: files/agent.cfg
+    dest: /etc/fusioninventory 
+    force: yes
+
+  notify:
+      - restart fusioninventory-agent service

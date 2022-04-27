@@ -1,0 +1,9 @@
+---
+- hosts: server3 
+  remote_user: root
+
+  tasks:
+    - name: check hostname 
+      command: hostname
+      when: "'server3' in inventory_hostname"
+

@@ -1,0 +1,11 @@
+---
+- hosts: docker1 
+  gather_facts: True 
+  vars_files:
+    - pass.yml
+
+  tasks:
+    - name: Hello tag example
+      debug:
+        msg: "Hello!"
+

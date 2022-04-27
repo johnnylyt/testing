@@ -1,0 +1,11 @@
+---
+- hosts: server1 
+  become: yes
+  vars:
+    glpiserver: 1.1.1.1 
+
+  tasks:
+    - name: Apply Page Template
+      template:
+        src: files/agent.cfg.j2  
+        dest: /tmp/agent.cfg 

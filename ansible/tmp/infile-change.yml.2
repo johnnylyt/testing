@@ -1,0 +1,28 @@
+---
+- hosts: server1
+  vars:
+    glpihost: 1.1.1.1
+
+  tasks:
+    - name: Replace a localhost entry searching for a literal string to avoid escaping
+      lineinfile:
+        path: /tmp/agent.cfg 
+        search_string: 'glpihost'
+        line: server = http://{{glpihost}}/plugins/fusioninventory/ 
+        state: present
+        backup: yes
+
+
+    tasks:
+      - name: "Example1: Validate if a String or line is present in the file"
+        become: yes
+        become_user: root
+        tags: example1
+        lineinfile:
+          path: /tmp/agent.cfg 
+          # The String to Search
+          regexp: "glpihost" 
+          # The String to Replace
+          line: server = http://{{glpihost}}/plugins/fusioninventory/ 
+          state: present
+          backup: yes

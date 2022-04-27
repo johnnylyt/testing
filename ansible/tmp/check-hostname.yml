@@ -1,0 +1,30 @@
+---
+- hosts: server3 
+  vars:
+    greeting: 1.2.3.4
+
+  remote_user: root
+  tasks:
+    - name: check hostname 1234
+      command: hostname
+      when: "'server3' in inventory_hostname"
+      register: out
+
+    - debug: var=out.stdout_lines
+
+    - debug: 
+        msg: "{{ greeting }}" 
+
+    - name: "Set variables"
+      set_fact:
+        muser_name: "admin"
+        muser_permissions: "rwx"
+
+    - name: "Set variables"
+      set_fact:
+        muser_name: "root"
+        muser_permissions: "rwx"
+      when: "'server3' in inventory_hostname"
+
+    - debug:
+        msg: "The user '{{ muser_name }}' has permissions '{{ muser_permissions }}'"

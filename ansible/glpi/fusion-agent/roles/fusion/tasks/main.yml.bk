@@ -1,0 +1,41 @@
+---
+- name: Enable EPEL Repository on CentOS 8
+  command: /usr/bin/dnf config-manager --set-enabled powertools
+
+- name: Installing epel-release 
+  yum: 
+    name: 
+      - epel-release
+    state: latest
+
+- name: Installing fusioninventory  
+  yum: 
+    name: 
+      - fusioninventory-agent
+      - fusioninventory-agent-task-inventory
+    state: latest
+
+    
+- name: Disable service 
+  service: 
+    name: fusioninventory-agent
+    enabled: no 
+    state: stopped
+
+
+- name: Set crontab for daily task
+  ansible.builtin.cron:
+    name: "Fusioninventory-agent daily job"
+    minute: "0"
+    hour: "2"
+    job: "/usr/bin/fusioninventory-agent -f > /var/lib/fusioninventory-agent/cron.log 2>&1"
+
+- name: Copying your agent.cfg to /etc/fusioninventory
+  copy:
+    src: files/agent.cfg
+    dest: /etc/fusioninventory
+    force: yes
+
+  notify:
+      - restart fusioninventory-agent service
+
